@@ -10,20 +10,19 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface BLCViewController () <UITextFieldDelegate>
+@interface BLCViewController () <UITextFieldDelegate, UITabBarControllerDelegate>
 
 @property (weak, nonatomic) UILabel *numberOfBeersFromSlider;
-
 @property (weak, nonatomic) UIButton *calculateButton;
 @property (weak, nonatomic) UITapGestureRecognizer *hideKeyboardTapGestureRecognizer;
+
 
 @end
 
 @implementation BLCViewController
 -(void)loadView {
-    self.view = [[UIView alloc] init];
     
-
+    self.view = [UIView new];
     UITextField *textField = [[UITextField alloc] init];
     UISlider *slider = [[UISlider alloc] init];
     UILabel *label = [[UILabel alloc] init];
@@ -41,18 +40,23 @@
     self.resultLabel = label;
     self.calculateButton = button;
     self.hideKeyboardTapGestureRecognizer = tap;
-    
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"Vodka";
 	self.view.backgroundColor = [UIColor lightGrayColor];
     
+    [self.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0, -20)];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:15]} forState:UIControlStateNormal];
     // TextField
     
+    
+    
     self.beerPercentTextField.delegate = self;
+    self.beerPercentTextField.tag = 1;
     self.beerPercentTextField.placeholder = NSLocalizedString(@"% Alcohol Content Per Beer", @"Beer percent placeholder text");
     self.beerPercentTextField.backgroundColor = [UIColor whiteColor];
     self.beerPercentTextField.layer.cornerRadius = 8.0f;
@@ -61,6 +65,7 @@
     // I would like to centre only a placeholder - not the beer count.
     
     // Slider
+    
     [self.beerCountSlider addTarget:self action:@selector(sliderValueDidChange:) forControlEvents:UIControlEventValueChanged];
     self.beerCountSlider.maximumValue = 10;
     self.beerCountSlider.minimumValue = 1;
@@ -76,7 +81,7 @@
     [self.hideKeyboardTapGestureRecognizer addTarget:self action:@selector(tapGestureRecognizer:)];
     self.resultLabel.numberOfLines = 0;
     self.resultLabel.textAlignment = NSTextAlignmentCenter;
-    self.resultLabel.text = @"Alcolator: ;
+    self.resultLabel.text = @"Click calculate after filling how much alcohol was in your beer";
     
 }
 -(void)viewWillLayoutSubviews{
@@ -107,7 +112,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)textFieldDidChange:(UITextField *)sender {
+ - (void)textFieldDidChange:(UITextField *)sender {
     NSString *enteredText = sender.text;
     float enteredNumber = [enteredText floatValue];
     
@@ -119,6 +124,8 @@
 - (void)sliderValueDidChange:(UISlider *)sender {
     NSLog(@"Slider Value changed to %f", sender.value);
     [self.beerPercentTextField resignFirstResponder];
+    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
+
     }
 
 - (void)buttonPressed:(UIButton *)sender {
@@ -137,8 +144,6 @@
     
     float ouncesOfAlcoholPerOneShot = ouncesInOneShot * alcoholPercentageOfVodka;
     float numberOfShotsEquivalentAlcoholAmount = ouncesOfTotalAlcohol / ouncesOfAlcoholPerOneShot;
-    
-
     
     if (numberOfBeers == 1 ) {
         self.beerText = NSLocalizedString(@"beer", @"singular beer");
@@ -163,6 +168,18 @@
     [self.beerPercentTextField resignFirstResponder];
 }
 
+
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+   
+    NSLog(@"hej lamusy, zmienilem sie jestem w WC");
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ( [self.title isEqualToString:@"Vodka"]) {
+        NSLog (@"%@", self.title);
+    }
+    
+    return YES;
+}
 
 
 @end

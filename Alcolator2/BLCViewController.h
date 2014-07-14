@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BLCViewController : UIViewController
+
+@class BLCWhiskeyViewController;
+
+@interface BLCViewController : UIViewController <UITabBarControllerDelegate>
 
 @property (weak, nonatomic) UITextField *beerPercentTextField;
 @property (weak, nonatomic) UISlider *beerCountSlider;

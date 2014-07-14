@@ -7,16 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLCViewController.h"
 
-
-@interface BLCWhiskeyViewController : UIViewController
-
-@property (weak, nonatomic) UITextField *beerPercentTextField;
-@property (weak, nonatomic) UISlider *beerCountSlider;
-@property (weak, nonatomic) UILabel *resultLabel;
-@property (strong, nonatomic) NSString *beerText;
+@interface BLCWhiskeyViewController : BLCViewController 
 
 - (void)buttonPressed:(UIButton *)sender;
 
-
 @end
+
+

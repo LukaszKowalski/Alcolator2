@@ -8,16 +8,22 @@
 
 #import "BLCAppDelegate.h"
 #import "BLCViewController.h"
+#import "BLCWhiskeyViewController.h"
 
 @implementation BLCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     BLCViewController *viewController = [[BLCViewController alloc] init];
-    self.window.rootViewController = viewController;
+    BLCWhiskeyViewController *whiskeyViewController = [[BLCWhiskeyViewController alloc] init];
+    UITabBarController *tabBarVC = [[UITabBarController alloc] init];
+    tabBarVC.delegate = viewController;
+    tabBarVC.viewControllers = @[viewController, whiskeyViewController];
+    [tabBarVC setSelectedIndex:1];
+    [tabBarVC setSelectedIndex:0];
+    self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

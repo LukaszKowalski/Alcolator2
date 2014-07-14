@@ -8,10 +8,13 @@
 
 #import "BLCWhiskeyViewController.h"
 
+@implementation BLCWhiskeyViewController 
 
-@implementation BLCWhiskeyViewController
-
-// DELETE PRE-WRITTEN METHODS: initiWithNibName:bundle:, viewDidLoad, didReceiveMemoryWarning…
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = @"Whiskey";
+    self.beerPercentTextField.tag = 2;
+}
 
 - (void)buttonPressed:(UIButton *)sender;
 {
@@ -49,4 +52,7 @@ if (numberOfWhiskeyGlassesForEquivalentAlcoholAmount == 1) {
 NSString *resultText = [NSString stringWithFormat:NSLocalizedString(@"%d %@ contains as much alcohol as %.1f %@ of whiskey.", nil), numberOfBeers, beerText, numberOfWhiskeyGlassesForEquivalentAlcoholAmount, whiskeyText];
 self.resultLabel.text = resultText;
 }
+
+
+    
 @end
